@@ -17,6 +17,18 @@ def index():
 def register():
     return render_template("register.html")
 
+@app.route("/create_recipe", methods=["POST"])
+def create_recipe():
+    recipe_name = request.form["recipe_name"]
+    recipe_ingridients = request.form["ingridients"]
+    user_id = session["user_id"]
+    try:
+        sql = "INSERT INTO recipes (title , ingridients, user_id) VALUES (?, ?, ?)"
+        db.execute(sql, [recipe_name, recipe_ingridients, user_id])
+    except sqlite3.IntegrityError:
+        return "wtf"
+    return redirect("/")
+
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
@@ -42,10 +54,14 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         
-        sql = "SELECT password_hash FROM users WHERE username = ?"
-        password_hash = db.query(sql, [username])[0][0]
+        sql = "SELECT id, password_hash FROM users WHERE username = ?"
+        result = db.query(sql, [username])[0]
+        user_id = result["id"]
+        password_hash = result["password_hash"]
+       
 
         if check_password_hash(password_hash, password):
+            session["user_id"] = user_id
             session["username"] = username
             return redirect("/")
         else:
@@ -54,4 +70,11 @@ def login():
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["user_id"]
     return redirect("/")
+
+@app.route("/new_recipe")
+def new_recipe():
+    return render_template("new_recipe.html")
+
+    

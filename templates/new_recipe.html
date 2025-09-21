@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Uusi resepti</title>
+</head>
+
+<body>
+  <h1>Lisää uusi resepti</h1>
+  <form action="/create_recipe" method="post">
+    <p>
+      Reseptin Nimi: <br />
+      <input type="text" name="recipe_name" />
+    </p>
+    <p>
+      Ainesosa erota ainesosat pilkulla ja anna määrä kokonaislukuina esim "maito 1, muna 3": <br />
+      <textarea name="ingridients"></textarea>
+    </p>
+   
+    <input type="submit" value="Luo Resepti!" />
+  </form>
+</body>
+
+</html>
