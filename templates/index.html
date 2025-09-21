@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Ostoslista</title>
+</head>
+
+<body>
+  <h>Ostoslista</h>
+  {% if session.username %}
+  <p>
+    Olet kirjautunut nimellä {{ session.username }}
+  </p>
+  <a href="/logout">Kirjaudu ulos</a>
+  {% else %}
+  <a href="/login">Kirjaude sisään</a>
+  <a href="/register">Luo käyttäjätunnus</a>
+  {% endif %}
+  
+</body>
+
+</html>
