@@ -5,13 +5,22 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 import config
 import db
+import recipes
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
+    
+    
     return render_template("index.html")
+
+@app.route("/my_recipies")
+def my_recipies():
+    my_recipes = recipes.get_my_recipes(session["user_id"])
+    print(my_recipes)
+    return render_template("my_recipies.html", recipes=my_recipes)
 
 @app.route("/register")
 def register():
@@ -22,11 +31,7 @@ def create_recipe():
     recipe_name = request.form["recipe_name"]
     recipe_ingridients = request.form["ingridients"]
     user_id = session["user_id"]
-    try:
-        sql = "INSERT INTO recipes (title , ingridients, user_id) VALUES (?, ?, ?)"
-        db.execute(sql, [recipe_name, recipe_ingridients, user_id])
-    except sqlite3.IntegrityError:
-        return "wtf"
+    recipes.add_recipe(recipe_name,recipe_ingridients, user_id)
     return redirect("/")
 
 @app.route("/create", methods=["POST"])
