@@ -11,4 +11,7 @@ def get_my_recipes(user_id):
     sql = "SELECT id, title, ingridients FROM recipes WHERE user_id=? ORDER BY id DESC"
     
     return db.query(sql,[user_id])
+def get_recipe(recipe_id):
+    sql = "SELECT title, ingridients FROM recipes WHERE id=?"
+    return db.query(sql,[recipe_id])[0]
     

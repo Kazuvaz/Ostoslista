@@ -16,6 +16,12 @@ def index():
     
     return render_template("index.html")
 
+@app.route("/recipe/<int:recipe_id>")
+def show_recipe(recipe_id):
+    recipe = recipes.get_recipe(recipe_id)
+    
+    return render_template("show_recipe.html", recipe =recipe)
+
 @app.route("/my_recipies")
 def my_recipies():
     my_recipes = recipes.get_my_recipes(session["user_id"])
