@@ -8,8 +8,5 @@
 * käyttäjä pystyy näkemään muiden luomia reseptejä
 * käyttäjä pystyy näkemään kaikki tarvittavat ainesosat ostoslistassa oleville resepteille
 
-## Sovelluksen ehkä toiminnot toiminnot
-* käyttäjä pysty ehdottamaan muutoksia resepteihin
-* reseptin omistaja voi nähdä muutos ilmoitukset ja hyväksyä/kieltää ne
-* käyttäjä pystyy lisätä yksittäisiä ainesosia ostoslistaan
-* hinta arvioit?
+kuinka testata:
+kloonaa repositorio, luo datakannat schema.sql avulla "sqlite3 database.db -> kopioi schema.sql", aja "flask run"
