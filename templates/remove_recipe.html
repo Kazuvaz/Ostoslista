@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Poista resepti</title>
+</head>
+
+<body>
+  <h1>{{ recipe.title }}</h1>
+  <form action="/delete_recipe" method="post">
+    <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
+    <input type="submit" value="Poista" />
+  </form>
+  <a href="/recipe/{{ recipe.id }}">Takaisin</a>
+</body>
+
+</html>

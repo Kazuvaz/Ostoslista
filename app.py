@@ -16,6 +16,12 @@ def index():
     
     return render_template("index.html")
 
+@app.route("/edit_recipe/<int:recipe_id>")
+def edit_recipe(recipe_id):
+    recipe = recipes.get_recipe(recipe_id)
+    
+    return render_template("edit_recipe.html", recipe =recipe)
+
 @app.route("/recipe/<int:recipe_id>")
 def show_recipe(recipe_id):
     recipe = recipes.get_recipe(recipe_id)
@@ -88,4 +94,25 @@ def logout():
 def new_recipe():
     return render_template("new_recipe.html")
 
+@app.route("/update_recipe", methods=["POST"])
+def update_recipe():
+    recipe_id =  request.form["recipe_id"]
+    recipe_name = request.form["recipe_name"]
+    recipe_ingridients = request.form["ingridients"]
+    
+    recipes.update_recipe(recipe_id,recipe_name,recipe_ingridients)
+    return redirect("/recipe/" + str(recipe_id))
+
+@app.route("/remove_recipe/<int:recipe_id>")
+def remove_recipe(recipe_id):
+    recipe = recipes.get_recipe(recipe_id)
+    
+    return render_template("remove_recipe.html", recipe =recipe)
+
+@app.route("/delete_recipe", methods=["POST"])
+def delete_recipe():
+    recipe_id =  request.form["recipe_id"]
+    
+    recipes.delete_recipe(recipe_id)
+    return redirect("/my_recipies")
     
