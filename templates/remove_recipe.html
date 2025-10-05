@@ -9,6 +9,7 @@
   <h1>{{ recipe.title }}</h1>
   <form action="/delete_recipe" method="post">
     <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Poista" />
   </form>
   <a href="/recipe/{{ recipe.id }}">Takaisin</a>

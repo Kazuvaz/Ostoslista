@@ -16,7 +16,7 @@
       Ainesosa erota ainesosat pilkulla ja anna määrä kokonaislukuina esim "maito 1, muna 3": <br />
       <textarea name="ingridients"></textarea>
     </p>
-   
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Luo Resepti!" />
   </form>
 </body>

@@ -17,6 +17,7 @@
       <textarea name="ingridients">{{recipe.ingridients}}</textarea>
     </p>
     <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Muokkaa" />
   </form>
 </body>

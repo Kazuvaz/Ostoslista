@@ -6,10 +6,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import config
 import db
 import recipes
-
+import secrets
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
 @app.route("/")
 def index():
     
@@ -40,6 +43,7 @@ def register():
 
 @app.route("/create_recipe", methods=["POST"])
 def create_recipe():
+    check_csrf()
     recipe_name = request.form["recipe_name"]
     recipe_ingridients = request.form["ingridients"]
     user_id = session["user_id"]
@@ -80,6 +84,7 @@ def login():
         if check_password_hash(password_hash, password):
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
@@ -96,6 +101,7 @@ def new_recipe():
 
 @app.route("/update_recipe", methods=["POST"])
 def update_recipe():
+    check_csrf()
     recipe_id =  request.form["recipe_id"]
     recipe_name = request.form["recipe_name"]
     recipe_ingridients = request.form["ingridients"]
@@ -111,6 +117,7 @@ def remove_recipe(recipe_id):
 
 @app.route("/delete_recipe", methods=["POST"])
 def delete_recipe():
+    check_csrf()
     recipe_id =  request.form["recipe_id"]
     
     recipes.delete_recipe(recipe_id)
