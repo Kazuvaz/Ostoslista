@@ -4,8 +4,10 @@
 
 * Käyttäjä pystyy luomaan käyttäjän ja salasalan
 * käyttäjä pystyy luomaan reseptejä (reseptit tässä kontextissa ovat vain tarvittavat ainesosat reseptiin)
+* käyttäjä pystyy poistamaan itseluomiaan reseptejä
 * käyttäjä pystyy laittamaan reseptejä ostoslistaansa
 * käyttäjä pystyy näkemään muiden luomia reseptejä
+* resepteissä näkyy kuinka moni käyttää niitä
 * käyttäjä pystyy näkemään kaikki tarvittavat ainesosat ostoslistassa oleville resepteille
 
 kuinka testata:
