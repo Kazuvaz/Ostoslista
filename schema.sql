@@ -8,5 +8,10 @@ CREATE TABLE recipes (
     id Integer PRIMARY KEY,	
 	title TEXT,
     ingridients TEXT,
-    user_id Integer REFERENCES users 
+    owner_id Integer REFERENCES users 
+); 
+
+CREATE TABLE subscriptions (
+    user_id Integer REFERENCES users,
+    recipe_id Integer REFERENCES recipes
 );

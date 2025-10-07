@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.secret_key = config.secret_key
 
 def check_csrf():
+    
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 @app.route("/")
@@ -25,16 +26,33 @@ def edit_recipe(recipe_id):
     
     return render_template("edit_recipe.html", recipe =recipe)
 
+@app.route("/follow_recipe/<int:recipe_id>")
+def follow_recipe(recipe_id):
+    
+    
+    recipes.follow_recipe(session["user_id"],recipe_id)
+    return redirect("/other_recipies")
+
+@app.route("/unfollow_recipe/<int:recipe_id>")
+def unfollow_recipe(recipe_id):
+    recipes.unfollow_recipe(session["user_id"],recipe_id)
+    return redirect("/other_recipies")
+
 @app.route("/recipe/<int:recipe_id>")
 def show_recipe(recipe_id):
     recipe = recipes.get_recipe(recipe_id)
-    
-    return render_template("show_recipe.html", recipe =recipe)
+    has = not recipes.already_follow(session["user_id"],recipe_id)
+    count = recipes.count_followers(recipe_id)
+    return render_template("show_recipe.html", recipe =recipe, has =has, count =count)
 
 @app.route("/my_recipies")
 def my_recipies():
     my_recipes = recipes.get_my_recipes(session["user_id"])
-    print(my_recipes)
+    return render_template("my_recipies.html", recipes=my_recipes)
+
+@app.route("/other_recipies")
+def others_recipies():
+    my_recipes = recipes.get_others_recipes(session["user_id"])
     return render_template("my_recipies.html", recipes=my_recipes)
 
 @app.route("/register")
@@ -93,7 +111,7 @@ def login():
 def logout():
     del session["username"]
     del session["user_id"]
-    return redirect("/")
+    return redirect("/login")
 
 @app.route("/new_recipe")
 def new_recipe():

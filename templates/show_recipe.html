@@ -7,11 +7,22 @@
 
 <body>
   <h1>{{ recipe.title }}</h1>
-  {% if session.user_id == recipe.user_id %}
+  <a>{{ count }} Käyttäjää käyttää reseptiä</a>
+  {% if session.user_id == recipe.owner_id %}
   <p>
     <a href="/edit_recipe/{{ recipe.id }}">Muokkaa reseptiä</a>
     <a href="/remove_recipe/{{ recipe.id }}">Poista resepti</a>
   </p>
+  {% else %} 
+    {% if has == true %}
+    <p>
+      <a href="/follow_recipe/{{ recipe.id }}">Lisää omaan Ostoslistaan</a>
+    </p>
+    {% else %}
+    <p>
+      <a href="/unfollow_recipe/{{ recipe.id }}">Poista Ostoslistasta</a>
+    </p>
+    {% endif %}
   {% endif %}
  <a>Ainesosat: {{ recipe.ingridients }}</a>
  <p>
