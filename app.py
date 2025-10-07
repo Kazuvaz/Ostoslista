@@ -7,6 +7,7 @@ import config
 import db
 import recipes
 import secrets
+import users
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
@@ -78,8 +79,7 @@ def create():
     password_hash = generate_password_hash(password1)
 
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        users.create_account(username,password_hash)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
@@ -93,8 +93,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         
-        sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result = db.query(sql, [username])[0]
+        result = users.get_hash(username)
         user_id = result["id"]
         password_hash = result["password_hash"]
        
