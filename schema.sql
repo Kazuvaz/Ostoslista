@@ -13,5 +13,5 @@ CREATE TABLE recipes (
 
 CREATE TABLE subscriptions (
     user_id Integer REFERENCES users,
-    recipe_id Integer REFERENCES recipes
+    recipe_id Integer REFERENCES recipes ON DELETE CASCADE
 );
