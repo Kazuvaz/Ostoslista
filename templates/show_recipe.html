@@ -16,11 +16,21 @@
   {% else %} 
     {% if has == true %}
     <p>
-      <a href="/follow_recipe/{{ recipe.id }}">Lisää omaan Ostoslistaan</a>
+      <a href="/follow_recipe">Lisää omaan Ostoslistaan</a>
+      <form action="/follow_recipe" method="post">
+        <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" value="Lisää omaan Ostoslistaan" />
+      </form>
     </p>
     {% else %}
     <p>
-      <a href="/unfollow_recipe/{{ recipe.id }}">Poista Ostoslistasta</a>
+      
+      <form action="/unfollow_recipe" method="post">
+        <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" value="Poista omasta ostoslistasta" />
+      </form>
     </p>
     {% endif %}
   {% endif %}

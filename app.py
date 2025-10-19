@@ -30,16 +30,17 @@ def edit_recipe(recipe_id):
     
     return render_template("edit_recipe.html", recipe =recipe)
 
-@app.route("/follow_recipe/<int:recipe_id>")
-def follow_recipe(recipe_id):
+@app.route("/follow_recipe", methods=["POST"])
+def follow_recipe():
+    check_csrf()
     
-    
-    recipes.follow_recipe(session["user_id"],recipe_id)
+    recipes.follow_recipe(session["user_id"],request.form["recipe_id"])
     return redirect("/other_recipies")
 
-@app.route("/unfollow_recipe/<int:recipe_id>")
-def unfollow_recipe(recipe_id):
-    recipes.unfollow_recipe(session["user_id"],recipe_id)
+@app.route("/unfollow_recipe", methods=["POST"])
+def unfollow_recipe():
+    check_csrf()
+    recipes.unfollow_recipe(session["user_id"],request.form["recipe_id"])
     return redirect("/other_recipies")
 
 @app.route("/recipe/<int:recipe_id>")
