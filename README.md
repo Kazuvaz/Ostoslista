@@ -10,5 +10,23 @@
 * resepteissä näkyy kuinka moni käyttää niitä
 * käyttäjä pystyy näkemään kaikki tarvittavat ainesosat ostoslistassa oleville resepteille
 
-kuinka testata:
-kloonaa repositorio, luo datakannat schema.sql avulla "sqlite3 database.db -> kopioi schema.sql", aja "flask run"
+## Sovelluksen asennus
+
+Asenna `flask`-kirjasto:
+
+```
+$ pip install flask
+```
+
+Luo tietokannan taulut ja lisää alkutiedot:
+
+```
+$ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < init.sql
+```
+
+Voit käynnistää sovelluksen näin:
+
+```
+$ flask run
+```
