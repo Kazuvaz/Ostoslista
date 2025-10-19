@@ -23,7 +23,12 @@
   </p>
   
    <a href="/logout">Kirjaudu ulos</a>
-
+  <h2>Ostoslistassasi olevian ainesosien määrät: </h2>
+  <ul>
+    {% for ab in summed %}
+    <li>{{ ab[0] }} {{ ab[1] }}</li>
+    {% endfor %}
+  </ul>
   {% else %}
   
   <p>

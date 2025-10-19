@@ -8,6 +8,7 @@ import db
 import recipes
 import secrets
 import users
+import ingridients
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
@@ -17,9 +18,11 @@ def check_csrf():
         abort(403)
 @app.route("/")
 def index():
+    summed =[]
+    if "user_id" in session:
+        summed = ingridients.get_all_ingridients(session["user_id"])
     
-    
-    return render_template("index.html")
+    return render_template("index.html",summed =summed)
 
 @app.route("/edit_recipe/<int:recipe_id>")
 def edit_recipe(recipe_id):
@@ -66,7 +69,10 @@ def create_recipe():
     recipe_name = request.form["recipe_name"]
     recipe_ingridients = request.form["ingridients"]
     user_id = session["user_id"]
+    
     recipes.add_recipe(recipe_name,recipe_ingridients, user_id)
+    
+    ingridients.get_all_ingridients(user_id)
     return redirect("/")
 
 @app.route("/create", methods=["POST"])
@@ -124,6 +130,7 @@ def update_recipe():
     recipe_ingridients = request.form["ingridients"]
     
     recipes.update_recipe(recipe_id,recipe_name,recipe_ingridients)
+    ingridients.update_ingridients(recipe_id,recipe_ingridients)
     return redirect("/recipe/" + str(recipe_id))
 
 @app.route("/remove_recipe/<int:recipe_id>")

@@ -1,17 +1,17 @@
 
 import sqlite3
 import db
-def add_recipe(name, ingridients, user_id):
+import ingridients
+def add_recipe(name, ingridientstext, user_id):
     
     sql = "INSERT INTO recipes (title , ingridients, owner_id) VALUES (?, ?, ?)"
-    db.execute(sql, [name, ingridients, user_id])
+    db.execute(sql, [name, ingridientstext, user_id])
 
-    #tällä hetkellä jos kahdella reseptillä on sama nimi voi yhdistys tulla väärän reseptin kanssa 
-    sql = "SELECT id FROM recipes WHERE title=?"
-    recipe_id = db.query(sql,[name])[0][0]
+    id =db.last_insert_id()
 
     sql = "INSERT INTO subscriptions (user_id, recipe_id) VALUES (?, ?)"
-    db.execute(sql, [user_id,recipe_id])
+    db.execute(sql, [user_id,id])
+    ingridients.create_ingridients(id,ingridientstext)
 def get_my_recipes(user_id):
     sql = """SELECT id, title, ingridients 
         FROM recipes 
